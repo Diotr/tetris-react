@@ -57,11 +57,12 @@ class App extends Component {
                 [0, 1, 0],
                 [1, 2, 1],
                 [0, 0, 0]
+               
             ],
             piece2:[
-                [0,0,0],
-                [1,1,0],
-                [1,1,0]
+                [0,1,1],
+                [0,1,0],
+                [0,1,1]
             ],
             blockGravity:-1,
             blockHorizontalPos:4,
@@ -81,11 +82,18 @@ class App extends Component {
             let d=this.state.blockGravity;
             let e=this.state.blockHorizontalPos;
             this.setState({board:this.state.gameBoard});  //czyści pole gry
-            console.log("gamePlay");
+            console.log("this.state."+ this.state.piece.length);
             return this.drawA({y:d,x:e,randomBlock});//ten return musi zostać
     } ;
+    rotateBlock = () =>(this.setState({piece: this.rotate(this.state.piece,1)}))
     
-    
+        rotate = (matrix,dir) =>{
+       const rotatedPiece = matrix.map((_, index)=>matrix.map(col=>col[index]),
+       );
+       if(dir>0) return (rotatedPiece.map(row=>row.reverse()));
+       return  rotatedPiece.reverse();
+       
+    };
     gamePlayStart = () =>{
         this.gameID =setInterval(this.gravity,1000);
             this.gameID =setInterval(this.gamePlay,100);
@@ -94,8 +102,8 @@ class App extends Component {
     };
     gamePlayStop = () => clearInterval(this.gameID);
         
-    isLocked = () =>{if(this.state.blockGravity>3){
-           this.setState({gameBoard: this.state.board})
+    isLocked = () =>{if(this.state.blockGravity>3){//to 3 to tylko do testów, zamiastt tego trzeba bedzie wstawić coś ze sprawdzania kolizji
+           this.setState({gameBoard: this.state.board})//ta funkcja dodaje tetromino do gameBoard
            console.log(this.state.board+"       "+this.state.gameBoard);
           // this.gamePlayStop();
            this.resetPlayer();
@@ -143,6 +151,7 @@ class App extends Component {
                 <button type="button" onClick={this.gamePlayStop}>Stop</button>
                 <button type="button" onClick={this.moveLeft}>Lewo</button>
                 <button type="button" onClick={this.moveRight}>Prawo</button>
+                <button type="button" onClick={this.rotateBlock}>rotate</button>
                 
             </Layout>
         )
