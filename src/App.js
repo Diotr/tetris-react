@@ -2,209 +2,164 @@ import React, { Component } from 'react';
 
 import Layout from './Layout/Layout';
 import Board from './Board';
-;
-
-
-
-
-
-
+let gravity = 0;
+let xPosition = 5;
+let randomPiece=
+[
+  [1, 0, 0],
+  [1, 0, 0],
+  [1, 1, 0]
+]
 class App extends Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        this.state = {
-            board: [
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            ],
-            gameBoard: [
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]],
+    this.state = {
+      board: [
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ],
 
-            tetrominoState: [],
-            piece:
-                [
-                    [0, 0, 0],
-                    [0, 1, 0],
-                    [1, 1, 1]
-                ],
+      gameBoard: [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+      ],
 
-
-            piece2: [
-                [0, 0, 0],
-                [0, 1, 0],
-                [1, 1, 1]
-            ],
-            blockGravity: -1,
-            blockHorizontalPos: 4,
-
-
-
-        }
+      piece2:
+        [
+          [1, 0, 0],
+          [1, 0, 0],
+          [1, 1, 0]
+        ],
     }
+  }
+  dropCollision = () => {
+    //console.log(y, '====', gravity, ' ', x, ' ===', xPosition, 'val', value)
+    console.log( (this.state.board.some((row, y) => row.some((value, x) => (y===gravity && x===xPosition &&value !=0,
+      console.log(y,gravity,x,xPosition,value)
+     )
+       ))))
+      return this.dropCollision}
 
-    moveRight = () => this.setState({ blockHorizontalPos: this.state.blockHorizontalPos + 1 });
-    moveLeft = () => this.setState({ blockHorizontalPos: this.state.blockHorizontalPos - 1 });
-    gravity = () => { this.setState({ blockGravity: this.state.blockGravity + 1 }); }
+  sideCollision = () => { }
 
+  playerReset = () => { }
 
+  lockTetromino = () => { }
+  ////////////////////////////////
+  moveRight = () => {
+    xPosition = xPosition + 1;
+    this.updateTetrominoPosition()
+  }
 
-
-    gamePlay = () => {
-        //sprawdza czy klocek osiadł
-
-        // this.isLocked();
-        let randomBlock = this.state.piece;
-        this.setState({ board: this.state.gameBoard });
-        //czyści pole gry 
-        this.drawA({ randomBlock });//ten return musi zostać
-    };
-    rotateBlock = () => (this.setState({ piece: this.rotate(this.state.piece, 1) }))
-
-    rotate = (matrix, dir) => {
-        console.log("rotate")
-        const rotatedPiece = matrix.map((_, index) => matrix.map(col => col[index]),
-        );
-        if (dir > 0) return (rotatedPiece.map(row => row.reverse()));
-        return rotatedPiece.reverse();
-
-    };
-    gamePlayStart = () => {
-        this.gameID = setInterval(this.gravity, 1000);
-        this.gameID = setInterval(this.gamePlay,1000);
-        //to rzeba zmienic, tylko tymczasowo tak jest
-
-    };
-    gamePlayStop = () => { clearInterval(this.gameID) };
-
-    isLocked = () => {
-        //if (this.state.blockGravity > 3) {//to 3 to tylko do testów, zamiastt tego trzeba bedzie wstawić coś ze sprawdzania kolizji
-        //console.log("lock");
-        this.setState({ gameBoard: this.state.board })//ta funkcja dodaje tetromino do gameBoard, łączy board z narysowanym klockiem do gameBoard
-        //console.log(this.state.board + "       " + this.state.gameBoard);
-        this.resetPlayer();
-        return true;
-        //  }
-        //console.log("kondiszon "+ this.state.blockGravity+" "+this.state.board+"  "+this.state.gameBoard);
-    }
-
-    resetPlayer = () => {
-        this.setState({ blockGravity: -1 });
-        this.setState({ blockHorizontalPos: 4 });
-    };
+  moveLeft = () => {
+    xPosition = xPosition - 1;
+    this.updateTetrominoPosition()
+  }
 
 
-    collision = () => {
-        console.log("collison");
-        this.state.tetrominoState.forEach((item, index) => {
-            this.state.board.some((row, y) => row.some((value, x) => {
-                if (y === item.yPos && x === item.xPos && value !== 0) {
-                 return   console.log("true")
+  tetrominoDrop = () => {
 
-                }
-            
+     this.dropCollision() 
+     
+    this.updateTetrominoPosition()
+    gravity = gravity + 1;
+  }
+  //////////////////////
+  updateTetrominoPosition = () => {
+    this.setState({ board: this.state.gameBoard },
+      () => { this.draw() })
+      console.log("update")
+  }
 
+
+  /////////////////////////
+  rotateTetromino = () => {return randomPiece=this.rotate(randomPiece), this.updateTetrominoPosition() }
+
+  rotate = (randomPiece) => {
+    console.log("rotate")
+    const rotatedPiece =randomPiece.map((_, index) => randomPiece.map(col => col[index]),
+    );
+     return (rotatedPiece.map(row => row.reverse()));
+    //return console.log(rotatedPiece.reverse());
+
+  };
+  ////////////////////////
+  draw = () => {
+
+    let newBoard = this.state.board;
+    randomPiece.forEach((row, yPos) => {
+      row.forEach((blockColor, xPos) => {
+        if (blockColor !== 0) {
+          newBoard = newBoard.map((row, y) => row.map((value, x) => {
+            if ((y === yPos + gravity && x === xPos + xPosition && blockColor !== 0)) {
+              return value = blockColor
+            } else {
+              return value
             }
-            )
-
-            )
+          }));
         }
-        )
-    }
-    //te poniżej chyba już są ok
-    drawA = (props) => {
-        this.setState({ tetrominoState: [] })
-        const tetromino = props.randomBlock.map((row, y) =>//ta funkcja rysuje nowe tetromino w state: board, jeśli nie można dalej przesunąć klocka trzeba zawołać isLocked
-            row.map((blockColor, x) => {
-                {
-                    this.player = {
-                        yPos: y + this.state.blockGravity,
-                        xPos: x + this.state.blockHorizontalPos,
-                        blockColor: blockColor
-                    }
-                }
-                /// console.log("player: " + this.player.xPos)
-                //dodać obiekt player do arr 
-                this.setState(prevState => ({ tetrominoState: [...prevState.tetrominoState, this.player] }))
-            }
-            ))
-        console.log("tetrstatedrav ", this.state.tetrominoState)
-       if( this.collision()){return this.isLocked()}
-        else this.upd()
-    }
-    upd = () => {
-        this.state.tetrominoState.forEach((item, index) => {
-            console.log("tetrstate ", this.state.tetrominoState)
-            console.log("rysuj y " + item.yPos + " x " + item.xPos + " v " + item.blockColor)
-            //console.log(item.yPos, "  ",item.xPos)
-            const newBoard = this.state.board.map((row, y) => row.map((value, x) => {
-                console.log("upd")
-                if ((y === item.yPos && x === item.xPos && item.blockColor !== 0)) { return value = item.blockColor }
-                else return value;
-            }))
-            this.setState({ board: newBoard });
+      })
+    })
+    this.setState({
+      board: newBoard
+    }, () => {
+      console.log("draw: board", this.state.board)
+    });
 
-        }
-        )
+  }
 
-    }
-    rysuj = () => {
-        this.state.tetrominoState.forEach(() => { console.log("rysuj y " + this.player.yPos + " x " + this.player.xPos + " v " + this.player.blockColor) })
-    }
+  render() {
+    return (
+      <Layout>
+        <div className="game-area">
+          <Board board={this.state.board} />
 
-    render() {
-        return (
-            <Layout>
-                <div className="game-area">
-                    <Board board={this.state.board} />
+        </div>
+        <button type="button" onClick={this.tetrominoDrop}>Start</button>
 
-                </div>
-                <button type="button" onClick={this.gamePlayStart}>Start</button>
-                <button type="button" onClick={this.gamePlayStop}>Stop</button>
-                <button type="button" onClick={this.moveLeft}>Lewo</button>
-                <button type="button" onClick={this.moveRight}>Prawo</button>
-                <button type="button" onClick={this.rotateBlock}>rotate</button>
-
-            </Layout>
-        )
-    }
+        <button type="button" onClick={this.rotateTetromino}>rotate</button>
+        <button type="button" onClick={this.moveLeft}>left</button>
+        <button type="button" onClick={this.moveRight}>right</button>
+      </Layout>
+    )
+  }
 }
 
 
