@@ -2,160 +2,164 @@ import React, { Component } from 'react';
 
 import Layout from './Layout/Layout';
 import Board from './Board';
-
+let gravity = 0;
+let xPosition = 5;
+let randomPiece=
+[
+  [1, 0, 0],
+  [1, 0, 0],
+  [1, 1, 0]
+]
 class App extends Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        this.state = {
-            board: [
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            ],
-           gameBoard: [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]],
-           
+    this.state = {
+      board: [
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ],
 
-            piece: [
-                [0, 1, 0],
-                [1, 2, 1],
-                [0, 0, 0]
-               
-            ],
-            piece2:[
-                [0,1,1],
-                [0,1,0],
-                [0,1,1]
-            ],
-            blockGravity:-1,
-            blockHorizontalPos:4,
-            
-            
-           
+      gameBoard: [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+      ],
+
+      piece2:
+        [
+          [1, 0, 0],
+          [1, 0, 0],
+          [1, 1, 0]
+        ],
     }
-    }
+  }
+  dropCollision = () => {
+    //console.log(y, '====', gravity, ' ', x, ' ===', xPosition, 'val', value)
+    console.log( (this.state.board.some((row, y) => row.some((value, x) => (y===gravity && x===xPosition &&value !=0,
+      console.log(y,gravity,x,xPosition,value)
+     )
+       ))))
+      return this.dropCollision}
 
-    moveRight = () =>this.setState({blockHorizontalPos:this.state.blockHorizontalPos+1});
-    moveLeft = () =>this.setState({blockHorizontalPos:this.state.blockHorizontalPos-1});
-    gravity = () =>{this.setState({blockGravity:this.state.blockGravity+1});console.log("gravity")}
-    //collisionDetection= () =>
-    gamePlay = () => {
-            this.isLocked();//sprawdza czy klocek osiadł
-            let randomBlock = this.state.piece;  
-            let d=this.state.blockGravity;
-            let e=this.state.blockHorizontalPos;
-            this.setState({board:this.state.gameBoard});  //czyści pole gry
-            console.log("this.state."+ this.state.piece.length);
-            return this.drawA({y:d,x:e,randomBlock});//ten return musi zostać
-    } ;
-    rotateBlock = () =>(this.setState({piece: this.rotate(this.state.piece,1)}))
-    
-        rotate = (matrix,dir) =>{
-       const rotatedPiece = matrix.map((_, index)=>matrix.map(col=>col[index]),
-       );
-       if(dir>0) return (rotatedPiece.map(row=>row.reverse()));
-       return  rotatedPiece.reverse();
-       
-    };
-    gamePlayStart = () =>{
-        this.gameID =setInterval(this.gravity,1000);
-            this.gameID =setInterval(this.gamePlay,100);
-           //to rzeba zmienic, tylko tymczasowo tak jest
-            
-    };
-    gamePlayStop = () => clearInterval(this.gameID);
-        
-    isLocked = () =>{if(this.state.blockGravity>3){//to 3 to tylko do testów, zamiastt tego trzeba bedzie wstawić coś ze sprawdzania kolizji
-           this.setState({gameBoard: this.state.board})//ta funkcja dodaje tetromino do gameBoard
-           console.log(this.state.board+"       "+this.state.gameBoard);
-          // this.gamePlayStop();
-           this.resetPlayer();
-          return true;
-          
-        }
-        //console.log("kondiszon "+ this.state.blockGravity+" "+this.state.board+"  "+this.state.gameBoard);
-    } 
+  sideCollision = () => { }
 
-  resetPlayer=()=>{
-      
-   this.setState({blockGravity:  -1});
-   this.setState({blockHorizontalPos:  4});
-    };
-        
-    //te poniżej chyba już są ok
-    drawA= (props) => props.randomBlock.forEach((row, y) =>
-        row.forEach((blockColor, x) => {
-            if (blockColor !==0){
-                let yPos = (y+props.y)
-                let xPos = (x+props.x)
-                this.updateBoard(yPos,xPos,blockColor)
+  playerReset = () => { }
+
+  lockTetromino = () => { }
+  ////////////////////////////////
+  moveRight = () => {
+    xPosition = xPosition + 1;
+    this.updateTetrominoPosition()
+  }
+
+  moveLeft = () => {
+    xPosition = xPosition - 1;
+    this.updateTetrominoPosition()
+  }
+
+
+  tetrominoDrop = () => {
+
+     this.dropCollision() 
+     
+    this.updateTetrominoPosition()
+    gravity = gravity + 1;
+  }
+  //////////////////////
+  updateTetrominoPosition = () => {
+    this.setState({ board: this.state.gameBoard },
+      () => { this.draw() })
+      console.log("update")
+  }
+
+
+  /////////////////////////
+  rotateTetromino = () => {return randomPiece=this.rotate(randomPiece), this.updateTetrominoPosition() }
+
+  rotate = (randomPiece) => {
+    console.log("rotate")
+    const rotatedPiece =randomPiece.map((_, index) => randomPiece.map(col => col[index]),
+    );
+     return (rotatedPiece.map(row => row.reverse()));
+    //return console.log(rotatedPiece.reverse());
+
+  };
+  ////////////////////////
+  draw = () => {
+
+    let newBoard = this.state.board;
+    randomPiece.forEach((row, yPos) => {
+      row.forEach((blockColor, xPos) => {
+        if (blockColor !== 0) {
+          newBoard = newBoard.map((row, y) => row.map((value, x) => {
+            if ((y === yPos + gravity && x === xPos + xPosition && blockColor !== 0)) {
+              return value = blockColor
+            } else {
+              return value
             }
-        }))
-        updateBoard = (yPos,xPos,blockColor) => {
+          }));
+        }
+      })
+    })
+    this.setState({
+      board: newBoard
+    }, () => {
+      console.log("draw: board", this.state.board)
+    });
 
-        const newBoard = this.state.board.map((row, y) => row.map((value, x) => {
-            if ((y === yPos) && (x === xPos)) {return value =blockColor}
-             else return value;
-        }));
-        //console.log("x: "+this.state.offsetX+  " y "+this.state.offsetY+ "grav "+this.state.gravity)
-        this.setState({ board: newBoard });
-        //console.log( "konsola"+this.state.board+"  "+this.state.gameBoard);
-        //this.isLocked(); //nie wiem czy to powinno być tu
-    }
-    
-    render() {
-        return (
-            <Layout>
-                <div className="game-area">
-                    <Board board={this.state.board} />
+  }
 
-                </div>
-                <button type="button" onClick={this.gamePlayStart}>Start</button>
-                <button type="button" onClick={this.gamePlayStop}>Stop</button>
-                <button type="button" onClick={this.moveLeft}>Lewo</button>
-                <button type="button" onClick={this.moveRight}>Prawo</button>
-                <button type="button" onClick={this.rotateBlock}>rotate</button>
-                
-            </Layout>
-        )
-    }
+  render() {
+    return (
+      <Layout>
+        <div className="game-area">
+          <Board board={this.state.board} />
+
+        </div>
+        <button type="button" onClick={this.tetrominoDrop}>Start</button>
+
+        <button type="button" onClick={this.rotateTetromino}>rotate</button>
+        <button type="button" onClick={this.moveLeft}>left</button>
+        <button type="button" onClick={this.moveRight}>right</button>
+      </Layout>
+    )
+  }
 }
 
 
