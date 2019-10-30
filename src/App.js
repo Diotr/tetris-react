@@ -5,13 +5,42 @@ import Board from './Board';
 
 let yOffset = 0;
 let xOffset = 5;
-let randomPiece =
-  [
-    [1, 1, 0],
+let score = 0;
+let randomPiece = [];
+let interval=null;
+let dropSpeed = 1000;
+  
+
+const T = [ 
+  [0, 1, 0],
+  [1, 1, 1],
+  [0, 0, 0]
+];
+
+const O = [ 
+  [3, 3],
+  [3, 3],
+  ];
+
+  const Z = [ 
+    [2, 2, 0],
     [0, 2, 2],
     [0, 0, 0]
-  ]
-  ;
+  ];
+
+  const L = [ 
+    [0, 4, 0],
+    [0, 4, 0],
+    [0, 4, 4]
+  ];
+
+
+  const I = [ 
+    [0, 5, 0, 0],
+    [0, 5, 0, 0],
+    [0, 5, 0, 0],
+    [0, 5, 0, 0]
+  ];
 
 let gameBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -25,8 +54,8 @@ let gameBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -45,13 +74,13 @@ class App extends Component {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 6, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -63,12 +92,29 @@ class App extends Component {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
-
+      score : 0
     }
+    
   }
+
   start = () => {
+   
+    this.resetRound();//temporary
+    this.getRandomTetromino();
+    this.dropInterval();
     this.draw();
   }
+dropInterval = () =>{
+  console.log('insterval');
+  //if(score%3===0){dropSpeed = dropSpeed/2}; //tu naprawić
+  interval = setInterval(this.drop,dropSpeed);
+  console.log('dropspeed: ',dropSpeed);
+
+}
+dropSpeedStop = ()=>{
+clearInterval(interval);
+}
+
   /////////////////////////////////////////
   drop = () => {
     console.log('drop');
@@ -76,13 +122,15 @@ class App extends Component {
     if (this.collision()) {
       console.log("kolizja");
       yOffset--;
-      //this.draw();
+      console.log('speeed',dropSpeed)
      this.lockTetromino();
     }
     else {
       this.draw();
     }
   }
+
+
   moveRight = () => {
     xOffset++;
     if (this.collision()) {
@@ -92,6 +140,8 @@ class App extends Component {
     else
       this.draw();
   }
+
+
   moveLeft = () => {
     xOffset--;
     if (this.collision()) {
@@ -101,6 +151,8 @@ class App extends Component {
     else
       this.draw();
   }
+
+
   //////////////////////////////////////
   lockTetromino = ()=>{
 
@@ -109,18 +161,57 @@ class App extends Component {
         gameBoard[y + yOffset][x + xOffset] = blockColor}
     console.log("lock");
       }))
+      this.scoreCheck();
     this.resetRound();
     };
+
+
 resetRound = ()=>{
   yOffset=0;
   xOffset=4;
+  this.getRandomTetromino();
   this.draw();
 }
+
+
 scoreCheck = ()=>{
+  console.log("check");
+gameBoard.forEach((row,index)=>{
+ if(!row.includes(0)){ 
+   console.log('index',row); 
+   gameBoard.splice(index,1);//if row doesn't contain zero, remove it
+   console.log("before",gameBoard)
+   gameBoard.unshift([0,0,0,0,0,0,0,0,0,0]); //add empty row
+   score++;
+   
+   this.setState({score : score});
+   console.log('after',gameBoard);
+ 
+}}
 
-
-  
+)
+this.draw();
 }
+
+gameOver = () =>{
+
+};
+
+
+gameReset = () =>{
+  yOffset=0;
+  xOffset=4;
+  score = 0;
+  gameBoard.map((row,_)=>row.fill(0)) //fill gameboard with zeros
+  
+  
+  //interval reset
+  
+  console.log(gameBoard)
+  this.draw();
+}
+
+
   /* collision = () =>{
     let aa;
     let piece = randomPiece;
@@ -152,15 +243,14 @@ scoreCheck = ()=>{
     return false;
   }
 
-  rotateTetromino = () => { 
-    
+  rotateTetromino = () => {   
    randomPiece= this.rotate();
    if(this.collision()){
      console.log("rotate: x:",xOffset,'y',yOffset);
-     xOffset--;//tu coś wstawić
+     return;//tu coś wstawić
    }
- 
     this.draw() }
+
 
   rotate = () => {
     console.log("rotate")
@@ -168,8 +258,36 @@ scoreCheck = ()=>{
     );
     return (rotatedPiece.map(row => row.reverse()));
     //return console.log(rotatedPiece.reverse());
-
   };
+
+
+componentDidMount(){
+document.onkeydown = this.onKeyDown;
+}
+
+
+onKeyDown = (e) =>{
+  
+  switch (e.keyCode){
+    default: console.log('wrong key');
+    break;
+    case 38:e.preventDefault();this.rotateTetromino();
+    break;
+    case 40:e.preventDefault();console.log('tetr down'); this.drop();
+    break;
+    case 39:e.preventDefault();this.moveRight();
+    break;
+    case 37:e.preventDefault();this.moveLeft();
+    break;
+  }
+  
+}
+getRandomTetromino = () =>{
+ let tetrominos = [T,O,Z,L,I];
+  return randomPiece = tetrominos[Math.floor(Math.random()*tetrominos.length)];
+  
+}
+
 
   draw = () => {
     let newBoard = JSON.parse(JSON.stringify(gameBoard))
@@ -196,8 +314,13 @@ scoreCheck = ()=>{
         <button type="button" onClick={this.moveLeft}>left</button>
         <button type="button" onClick={this.moveRight}>right</button>
         <button type="button" onClick={this.collision}>col</button>
-        <button type="button" onClick={this.draw}>draw</button>
+        <button type="button" onClick={this.scoreCheck}>score</button>
         <button type="button" onClick={this.resetRound}>res</button>
+        <button type="button" onClick={this.gameReset}>gameres</button>
+        <button type="button" onClick={this.dropInterval}>dropspeed</button>
+        <button type="button" onClick={this.dropSpeedStop}>dropstop</button>
+<h1>score={this.state.score}</h1>
+        
       </Layout>
     )
   }

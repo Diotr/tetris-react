@@ -14,6 +14,8 @@ class Board extends React.Component{
          else if (value ===1){style.backgroundColor = 'green'}
          else if (value ===2){style.backgroundColor = 'yellow'}
          else if (value ===3){style.backgroundColor = 'purple'}
+         else if (value ===4){style.backgroundColor = 'pink'}
+         else if (value ===5){style.backgroundColor = '#03c6fc'}
          //console.log("row: "+row+"x: "+x+"y: "+y);
          return(<div className = "block" style = {style}></div>)
        })
