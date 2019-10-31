@@ -108,21 +108,20 @@ dropInterval = () =>{
   console.log('insterval');
   //if(score%3===0){dropSpeed = dropSpeed/2}; //tu naprawić
   interval = setInterval(this.drop,dropSpeed);
-  console.log('dropspeed: ',dropSpeed);
+  //console.log('dropspeed: ',dropSpeed);
 
 }
-dropSpeedStop = ()=>{
+dropStop = ()=>{
 clearInterval(interval);
 }
 
   /////////////////////////////////////////
   drop = () => {
-    console.log('drop');
-    yOffset++;
+    yOffset++; 
+    
+      
     if (this.collision()) {
-      console.log("kolizja");
       yOffset--;
-      console.log('speeed',dropSpeed)
      this.lockTetromino();
     }
     else {
@@ -134,7 +133,7 @@ clearInterval(interval);
   moveRight = () => {
     xOffset++;
     if (this.collision()) {
-      console.log("kolizja");
+     // console.log("kolizja");
       xOffset--;
     }
     else
@@ -145,7 +144,7 @@ clearInterval(interval);
   moveLeft = () => {
     xOffset--;
     if (this.collision()) {
-      console.log("kolizja");
+      //console.log("kolizja");
       xOffset++;
     }
     else
@@ -159,7 +158,8 @@ clearInterval(interval);
     randomPiece.forEach((row, y) => row.forEach((blockColor, x) => {
       if (blockColor !== 0) {
         gameBoard[y + yOffset][x + xOffset] = blockColor}
-    console.log("lock");
+        
+   /// console.log("lock");
       }))
       this.scoreCheck();
     this.resetRound();
@@ -176,6 +176,7 @@ resetRound = ()=>{
 
 scoreCheck = ()=>{
   console.log("check");
+ 
 gameBoard.forEach((row,index)=>{
  if(!row.includes(0)){ 
    console.log('index',row); 
@@ -183,7 +184,7 @@ gameBoard.forEach((row,index)=>{
    console.log("before",gameBoard)
    gameBoard.unshift([0,0,0,0,0,0,0,0,0,0]); //add empty row
    score++;
-   
+   console.log('index',index);
    this.setState({score : score});
    console.log('after',gameBoard);
  
@@ -194,42 +195,26 @@ this.draw();
 }
 
 gameOver = () =>{
-
-};
-
-
-gameReset = () =>{
-  yOffset=0;
+if(! gameBoard[0].every(this.isZero)) {//check if every item in first gameboard array equals zero
+ 
+   console.log('game over')
+   yOffset=0;
   xOffset=4;
   score = 0;
+  this.dropStop();
   gameBoard.map((row,_)=>row.fill(0)) //fill gameboard with zeros
-  
-  
-  //interval reset
-  
-  console.log(gameBoard)
-  this.draw();
+
+  //this.draw();
+ 
+}
+};
+isZero = (field) =>{
+return field ===0;
 }
 
 
-  /* collision = () =>{
-    let aa;
-    let piece = randomPiece;
-  let board = gameBoard;
-    console.log('///////////');
-  console.log('cała funkcja', aa=piece.some((row,yPos)=>
-  console.log('wewn pętla',row.some((blockColor,xPos)=>{
-    console.log('a',yPos,xPos, blockColor,'coll ' ,(blockColor !==0)&& board[yPos+yOffset][xPos+xOffset]===1); 
-  
-  }
-  )
-  )
-  )
-  )
-  return console.log('aa',aa);
-  } */
   collision = () => {
-    console.log('kollll', yOffset);
+    this.gameOver(); //move it somewhere else
     let piece = randomPiece;
     let board = gameBoard;
     for (let y = 0; y < piece.length; y++) {
@@ -246,7 +231,7 @@ gameReset = () =>{
   rotateTetromino = () => {   
    randomPiece= this.rotate();
    if(this.collision()){
-     console.log("rotate: x:",xOffset,'y',yOffset);
+     //console.log("rotate: x:",xOffset,'y',yOffset);
      return;//tu coś wstawić
    }
     this.draw() }
@@ -273,7 +258,7 @@ onKeyDown = (e) =>{
     break;
     case 38:e.preventDefault();this.rotateTetromino();
     break;
-    case 40:e.preventDefault();console.log('tetr down'); this.drop();
+    case 40:e.preventDefault(); this.drop();
     break;
     case 39:e.preventDefault();this.moveRight();
     break;
