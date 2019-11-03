@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 
 import Layout from './Layout/Layout';
 import Board from './Board';
+import Controls from './Controls/Controls';
 
+let level =1;
 let yOffset = 0;
 let xOffset = 5;
 let score = 0;
+let totalScore = 0;
 let randomPiece = [];
 let interval=null;
 let dropSpeed = 1000;
-  
+let linesTotal =0;
+
 
 const T = [ 
   [0, 1, 0],
@@ -27,22 +31,32 @@ const O = [
     [0, 2, 2],
     [0, 0, 0]
   ];
-
-  const L = [ 
-    [0, 4, 0],
-    [0, 4, 0],
-    [0, 4, 4]
+  const S = [ 
+    [0, 2, 2],
+    [2, 2, 0],
+    [0, 0, 0]
   ];
 
+  const L = [ 
+    [0, 0, 0],
+    [0, 0, 4],
+    [4, 4, 4]
+  ];
 
+  const M = [ 
+    [0, 0, 0],
+    [4, 0, 0],
+    [4, 4, 4]
+  ];
   const I = [ 
-    [0, 5, 0, 0],
-    [0, 5, 0, 0],
-    [0, 5, 0, 0],
-    [0, 5, 0, 0]
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [5, 5, 5, 5],
+    [0, 0, 0, 0]
   ];
 
 let gameBoard = [
+  
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,6 +85,7 @@ class App extends Component {
 
     this.state = {
       board: [
+        
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -92,7 +107,7 @@ class App extends Component {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
-      score : 0
+      totalScore : 0
     }
     
   }
@@ -175,36 +190,61 @@ resetRound = ()=>{
 
 
 scoreCheck = ()=>{
-  console.log("check");
- 
+  //console.log("check");
+  
+  let score = 0;
+ let multipleLines= 0;
 gameBoard.forEach((row,index)=>{
  if(!row.includes(0)){ 
-   console.log('index',row); 
+   //console.log('index',row); 
    gameBoard.splice(index,1);//if row doesn't contain zero, remove it
-   console.log("before",gameBoard)
+  // console.log("before",gameBoard)
    gameBoard.unshift([0,0,0,0,0,0,0,0,0,0]); //add empty row
-   score++;
-   console.log('index',index);
-   this.setState({score : score});
-   console.log('after',gameBoard);
- 
-}}
+  
+   multipleLines++
+  }})
+if (linesTotal!==0&&linesTotal%5===0){level++;
+   dropSpeed=dropSpeed-50;this.dropStop();this.dropInterval(); };//if level up, drop speed increases
 
-)
+score = this.calculateScore(multipleLines);
+linesTotal+=multipleLines;
+totalScore = totalScore +=score;
+console.log('multiplelines',multipleLines);
+console.log('score',score);
+console.log('totalscore',totalScore);
+this.setState({totalScore : totalScore});
 this.draw();
+console.log('level',level,'lines',linesTotal,'dropspeed',dropSpeed);
+}
+
+calculateScore = (multipleLines) =>{
+  let score;
+  if (multipleLines===0){
+    score=0
+  }
+  else if (multipleLines<=1){
+    score=multipleLines*100
+  }
+ else if (multipleLines===2){
+    score=300
+  }
+  else if (multipleLines===3){
+    score=500
+  }else if (multipleLines===1){
+    score=800
+  }
+  return score;
 }
 
 gameOver = () =>{
-if(! gameBoard[0].every(this.isZero)) {//check if every item in first gameboard array equals zero
+if(! gameBoard[1].every(this.isZero)) {//check if every item in first gameboard array equals zero
  
    console.log('game over')
-   yOffset=0;
-  xOffset=4;
-  score = 0;
-  this.dropStop();
-  gameBoard.map((row,_)=>row.fill(0)) //fill gameboard with zeros
-
+   this.dropStop();
+  
+//display game over
   //this.draw();
+  
  
 }
 };
@@ -212,6 +252,13 @@ isZero = (field) =>{
 return field ===0;
 }
 
+gameReset = () =>{
+yOffset=0;
+  xOffset=4;
+  score = 0;
+  this.dropStop();
+  gameBoard.map((row,_)=>row.fill(0)) //fill gameboard with zeros
+}
 
   collision = () => {
     this.gameOver(); //move it somewhere else
@@ -229,20 +276,21 @@ return field ===0;
   }
 
   rotateTetromino = () => {   
-   randomPiece= this.rotate();
+   randomPiece= this.rotate(0);
    if(this.collision()){
-     //console.log("rotate: x:",xOffset,'y',yOffset);
-     return;//tu coś wstawić
+     randomPiece=this.rotate(1);
+     return;//if collided try to move tetromino left or right?
    }
     this.draw() }
 
 
-  rotate = () => {
+  rotate = (direction) => {
     console.log("rotate")
     const rotatedPiece = randomPiece.map((_, index) => randomPiece.map(col => col[index]),
     );
+   if(direction===0)
     return (rotatedPiece.map(row => row.reverse()));
-    //return console.log(rotatedPiece.reverse());
+   else return rotatedPiece.reverse();
   };
 
 
@@ -268,7 +316,7 @@ onKeyDown = (e) =>{
   
 }
 getRandomTetromino = () =>{
- let tetrominos = [T,O,Z,L,I];
+ let tetrominos = [T,O,Z,L,I,S,M];
   return randomPiece = tetrominos[Math.floor(Math.random()*tetrominos.length)];
   
 }
@@ -283,12 +331,15 @@ getRandomTetromino = () =>{
         newBoard[y + yOffset][x + xOffset] = blockColor;
       }
     }))
-    this.setState({ board: newBoard }, () => { console.log('draw') })
+    this.setState({ board: newBoard }, () => {  })
   }
   /////////////
   render() {
     return (
       <Layout>
+        <div className = "controls">
+       {<Controls controls/>}
+        </div>
         <div className="game-area">
           <Board board={this.state.board} />
 
@@ -303,8 +354,9 @@ getRandomTetromino = () =>{
         <button type="button" onClick={this.resetRound}>res</button>
         <button type="button" onClick={this.gameReset}>gameres</button>
         <button type="button" onClick={this.dropInterval}>dropspeed</button>
-        <button type="button" onClick={this.dropSpeedStop}>dropstop</button>
-<h1>score={this.state.score}</h1>
+        <button type="button" onClick={this.dropStop}>dropstop</button>
+<h1>score={this.state.totalScore}</h1>
+<h1>lines={linesTotal}</h1>
         
       </Layout>
     )
