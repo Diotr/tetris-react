@@ -230,7 +230,7 @@ calculateScore = (multipleLines) =>{
   }
   else if (multipleLines===3){
     score=500
-  }else if (multipleLines===1){
+  }else if (multipleLines===4){
     score=800
   }
   return score;
@@ -278,7 +278,7 @@ yOffset=0;
   rotateTetromino = () => {   
    randomPiece= this.rotate(0);
    if(this.collision()){
-     randomPiece=this.rotate(1);
+     randomPiece=this.rotate(1);//if collided rotate tetromino to previous position
      return;//if collided try to move tetromino left or right?
    }
     this.draw() }
@@ -323,7 +323,7 @@ getRandomTetromino = () =>{
 
 
   draw = () => {
-    let newBoard = JSON.parse(JSON.stringify(gameBoard))
+    let newBoard = JSON.parse(JSON.stringify(gameBoard))// make copy of gameboard
     //console.log('po new',newBoard)
     randomPiece.forEach((row, y) => row.forEach((blockColor, x) => {
       if (blockColor !== 0) {
@@ -338,26 +338,17 @@ getRandomTetromino = () =>{
     return (
       <Layout>
         <div className = "controls">
-       {<Controls controls/>}
+       <Controls start = {this.start}
+        score = {this.state.totalScore}
+        dropStop = {this.dropStop}
+        
+         />
+       
         </div>
         <div className="game-area">
           <Board board={this.state.board} />
 
-        </div>
-        <button type="button" onClick={this.start}>Start</button>
-        <button type="button" onClick={this.drop}>drop</button>
-        <button type="button" onClick={this.rotateTetromino}>rotate</button>
-        <button type="button" onClick={this.moveLeft}>left</button>
-        <button type="button" onClick={this.moveRight}>right</button>
-        <button type="button" onClick={this.collision}>col</button>
-        <button type="button" onClick={this.scoreCheck}>score</button>
-        <button type="button" onClick={this.resetRound}>res</button>
-        <button type="button" onClick={this.gameReset}>gameres</button>
-        <button type="button" onClick={this.dropInterval}>dropspeed</button>
-        <button type="button" onClick={this.dropStop}>dropstop</button>
-<h1>score={this.state.totalScore}</h1>
-<h1>lines={linesTotal}</h1>
-        
+        </div> 
       </Layout>
     )
   }
