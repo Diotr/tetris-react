@@ -1,9 +1,26 @@
 .controls{
     position: absolute;
+    height: 400px;
 
-    
-    margin: 40px;
-    padding: 50px;
+    left: 70%;
+  
+
     border-radius: 10px;
     border: 2px solid blueviolet;
 }
+
+.buttons{
+ position: relative;   
+ margin: 30px;
+ padding: 20px;
+ 
+
+ border: 10px solid coral;
+}
+ .score{
+     position: relative;
+     margin: 30px;
+     padding: 10px;
+     border: 5px solid darkgreen;
+
+ }

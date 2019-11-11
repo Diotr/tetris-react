@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Layout from './Layout/Layout';
 import Board from './Board';
 import Controls from './Controls/Controls';
+import Buttons from './Controls/Buttons/Buttons';
 
 let level =1;
 let yOffset = 0;
@@ -339,8 +340,11 @@ getRandomTetromino = () =>{
       <Layout>
         <div className = "controls">
        <Controls start = {this.start}
-        score = {this.state.totalScore}
+       
         dropStop = {this.dropStop}
+        totalScore = {this.state.totalScore}
+        level = {level}
+        linesTotal = {linesTotal}
         
          />
        
@@ -349,6 +353,7 @@ getRandomTetromino = () =>{
           <Board board={this.state.board} />
 
         </div> 
+
       </Layout>
     )
   }

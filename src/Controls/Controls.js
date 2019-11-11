@@ -5,13 +5,26 @@ import './controls.css';
 
 const controls = (props) =>(
 <div>
-    <div><p>display</p></div>
-    <div><p>buttons</p>{props.buttons}</div>
-    <button onClick = {()=>props.start()}>start</button>
-    <button onClick = {()=>props.dropStop()}>stop</button>
+    
+    
+    
     <h1>{props.score}</h1>
-    <Buttons button/>
-    <Score score/>
+    
+    
+    <div className = 'score'>
+    <Score 
+    totalScore = {props.totalScore}
+     level = {props.level}
+     linesTotal = {props.linesTotal} />
+    </div>
+
+    <div className = "buttons">
+        <Buttons 
+        start={props.start} 
+        dropStop = {props.dropStop}
+        />
+        
+        </div>
 </div>
 
 );
