@@ -1,12 +1,12 @@
 .controls{
     position: absolute;
     height: 400px;
-top: 10%;
+    top: 10%;
     left: 70%;
   
 
-    border-radius: 10px;
-    border: 2px solid blueviolet;
+    border-radius: 5px;
+    border: 8px solid rgb(14, 4, 59);
 }
 
 .buttons{
@@ -15,12 +15,12 @@ top: 10%;
  padding: 20px;
  
 
- border: 10px solid coral;
+ border: 8px solid rgb(14, 4, 59);
 }
  .score{
      position: relative;
      margin: 30px;
      padding: 10px;
-     border: 5px solid darkgreen;
+     border: 8px solid rgb(14, 4, 59);
 
  }

@@ -22,6 +22,7 @@ const controls = (props) =>(
         <Buttons 
         start={props.start} 
         dropStop = {props.dropStop}
+        pause={props.pause}
         />
         
         </div>

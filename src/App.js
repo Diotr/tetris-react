@@ -4,6 +4,7 @@ import Layout from './Layout/Layout';
 import Board from './Board';
 import Controls from './Controls/Controls';
 import Buttons from './Controls/Buttons/Buttons';
+import buttons from './Controls/Buttons/Buttons';
 
 let level =1;
 let yOffset = 0;
@@ -14,6 +15,7 @@ let randomPiece = [];
 let interval=null;
 let dropSpeed = 1000;
 let linesTotal =0;
+let buttonsActive = true;
 
 
 const T = [ 
@@ -119,6 +121,19 @@ class App extends Component {
     this.getRandomTetromino();
     this.dropInterval();
     this.draw();
+  }
+  pause = () =>{
+   
+   let x = document.getElementById('pauseButton').value;
+    if(document.getElementById('pauseButton').value==='resume'){
+      document.getElementById('pauseButton').value='pause'
+      this.dropStop();
+    }
+    else if (document.getElementById('pauseButton').value==='pause'){
+      document.getElementById('pauseButton').value='resume'
+   this.dropInterval()};
+    document.getElementById('pauseButton').textContent=x; //change button text
+    
   }
 dropInterval = () =>{
   console.log('insterval');
@@ -238,7 +253,7 @@ calculateScore = (multipleLines) =>{
 }
 
 gameOver = () =>{
-if(! gameBoard[1].every(this.isZero)) {//check if every item in first gameboard array equals zero
+if(! gameBoard[0].every(this.isZero)) {//if first row doesn't contain zero, game is over
  
    console.log('game over')
    this.dropStop();
@@ -301,7 +316,7 @@ document.onkeydown = this.onKeyDown;
 
 
 onKeyDown = (e) =>{
-  
+  if(buttonsActive){
   switch (e.keyCode){
     default: console.log('wrong key');
     break;
@@ -314,7 +329,7 @@ onKeyDown = (e) =>{
     case 37:e.preventDefault();this.moveLeft();
     break;
   }
-  
+}
 }
 getRandomTetromino = () =>{
  let tetrominos = [T,O,Z,L,I,S,M];
@@ -345,6 +360,7 @@ getRandomTetromino = () =>{
         totalScore = {this.state.totalScore}
         level = {level}
         linesTotal = {linesTotal}
+        pause = {this.pause}
         
          />
        
