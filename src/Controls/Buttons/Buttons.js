@@ -7,7 +7,7 @@ const buttons = (props) =>{
     <div>
    
     
-    <button onClick = {()=>props.start()}>start</button>
+    <button onClick = {()=>props.start()}>new game</button>
     <button onClick = {()=>props.dropStop()}>stop</button>
     <button id='pauseButton'value = "resume" onClick = {()=>props.pause()}>pause</button>
     </div>

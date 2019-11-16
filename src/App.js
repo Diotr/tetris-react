@@ -15,7 +15,7 @@ let randomPiece = [];
 let interval=null;
 let dropSpeed = 1000;
 let linesTotal =0;
-let buttonsActive = true;
+let buttonsActive = false;
 
 
 const T = [ 
@@ -40,21 +40,21 @@ const O = [
     [0, 0, 0]
   ];
 
-  const L = [ 
-    [0, 0, 0],
+  const L = [  
     [0, 0, 4],
-    [4, 4, 4]
+    [4, 4, 4],
+    [0, 0, 0]
   ];
 
-  const M = [ 
-    [0, 0, 0],
+  const M = [  
     [4, 0, 0],
-    [4, 4, 4]
+    [4, 4, 4],
+    [0, 0, 0]
   ];
   const I = [ 
     [0, 0, 0, 0],
-    [0, 0, 0, 0],
     [5, 5, 5, 5],
+    [0, 0, 0, 0],
     [0, 0, 0, 0]
   ];
 
@@ -116,7 +116,7 @@ class App extends Component {
   }
 
   start = () => {
-   
+    buttonsActive = true;
     this.resetRound();//temporary
     this.getRandomTetromino();
     this.dropInterval();
@@ -127,19 +127,21 @@ class App extends Component {
    let x = document.getElementById('pauseButton').value;
     if(document.getElementById('pauseButton').value==='resume'){
       document.getElementById('pauseButton').value='pause'
+      buttonsActive = false;
       this.dropStop();
     }
     else if (document.getElementById('pauseButton').value==='pause'){
       document.getElementById('pauseButton').value='resume'
-   this.dropInterval()};
+   this.dropInterval();
+    buttonsActive = true};
     document.getElementById('pauseButton').textContent=x; //change button text
     
   }
 dropInterval = () =>{
   console.log('insterval');
-  //if(score%3===0){dropSpeed = dropSpeed/2}; //tu naprawić
+ 
   interval = setInterval(this.drop,dropSpeed);
-  //console.log('dropspeed: ',dropSpeed);
+ 
 
 }
 dropStop = ()=>{
@@ -175,7 +177,6 @@ clearInterval(interval);
   moveLeft = () => {
     xOffset--;
     if (this.collision()) {
-      //console.log("kolizja");
       xOffset++;
     }
     else
@@ -185,12 +186,9 @@ clearInterval(interval);
 
   //////////////////////////////////////
   lockTetromino = ()=>{
-
     randomPiece.forEach((row, y) => row.forEach((blockColor, x) => {
       if (blockColor !== 0) {
         gameBoard[y + yOffset][x + xOffset] = blockColor}
-        
-   /// console.log("lock");
       }))
       this.scoreCheck();
     this.resetRound();
@@ -205,16 +203,12 @@ resetRound = ()=>{
 }
 
 
-scoreCheck = ()=>{
-  //console.log("check");
-  
+scoreCheck = ()=>{ 
   let score = 0;
  let multipleLines= 0;
 gameBoard.forEach((row,index)=>{
  if(!row.includes(0)){ 
-   //console.log('index',row); 
    gameBoard.splice(index,1);//if row doesn't contain zero, remove it
-  // console.log("before",gameBoard)
    gameBoard.unshift([0,0,0,0,0,0,0,0,0,0]); //add empty row
   
    multipleLines++
@@ -225,12 +219,8 @@ if (linesTotal!==0&&linesTotal%5===0){level++;
 score = this.calculateScore(multipleLines);
 linesTotal+=multipleLines;
 totalScore = totalScore +=score;
-console.log('multiplelines',multipleLines);
-console.log('score',score);
-console.log('totalscore',totalScore);
 this.setState({totalScore : totalScore});
 this.draw();
-console.log('level',level,'lines',linesTotal,'dropspeed',dropSpeed);
 }
 
 calculateScore = (multipleLines) =>{
@@ -257,7 +247,7 @@ if(! gameBoard[0].every(this.isZero)) {//if first row doesn't contain zero, game
  
    console.log('game over')
    this.dropStop();
-  
+   buttonsActive = false;
 //display game over
   //this.draw();
   
@@ -301,7 +291,6 @@ yOffset=0;
 
 
   rotate = (direction) => {
-    console.log("rotate")
     const rotatedPiece = randomPiece.map((_, index) => randomPiece.map(col => col[index]),
     );
    if(direction===0)
@@ -340,10 +329,8 @@ getRandomTetromino = () =>{
 
   draw = () => {
     let newBoard = JSON.parse(JSON.stringify(gameBoard))// make copy of gameboard
-    //console.log('po new',newBoard)
     randomPiece.forEach((row, y) => row.forEach((blockColor, x) => {
       if (blockColor !== 0) {
-        // console.log(y,x,newBoard)
         newBoard[y + yOffset][x + xOffset] = blockColor;
       }
     }))
