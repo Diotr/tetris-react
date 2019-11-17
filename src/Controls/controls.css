@@ -1,26 +1,35 @@
-.controls{
-    position: absolute;
-    height: 400px;
-    top: 10%;
-    left: 70%;
-  
 
-    border-radius: 5px;
-    border: 8px solid rgb(14, 4, 59);
-}
 
-.buttons{
- position: relative;   
- margin: 30px;
- padding: 20px;
- 
+button{
+        position: relative;   
+        margin: auto;
+        padding: 20px;
+        
+        width:100%;
 
- border: 8px solid rgb(14, 4, 59);
-}
+        border: 1px solid rgb(14, 4, 59);
+        background: rgba(0,51,0,0.2);
+        }
  .score{
+     
+     text-align: center;
      position: relative;
-     margin: 30px;
+     margin: auto;
      padding: 10px;
-     border: 8px solid rgb(14, 4, 59);
+     border: 1px solid rgb(14, 4, 59);
+     
 
  }
+
+ .scoreLabel{
+     font-family: Georgia, 'Times New Roman', Times, serif;
+
+ }
+h3{
+    font-family: fantasy;
+    font-size: 10mm;
+}
+p{
+    font-family: serif;
+    font-size: 20px;
+}

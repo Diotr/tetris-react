@@ -6,10 +6,12 @@ const buttons = (props) =>{
   return(  
     <div>
    
-    
+    <div>
     <button onClick = {()=>props.start()}>new game</button>
-    <button onClick = {()=>props.dropStop()}>stop</button>
+    </div>
+    <div>
     <button id='pauseButton'value = "resume" onClick = {()=>props.pause()}>pause</button>
+    </div>
     </div>
   );
 };

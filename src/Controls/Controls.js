@@ -4,15 +4,11 @@ import Score from '../Controls/Display/score';
 import './controls.css';
 
 const controls = (props) =>(
-<div>
-    
-    
-    
-    <h1>{props.score}</h1>
-    
-    
+<div >
+
     <div className = 'score'>
     <Score 
+    gameover = {props.gameover}
     totalScore = {props.totalScore}
      level = {props.level}
      linesTotal = {props.linesTotal} />

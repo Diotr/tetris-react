@@ -16,6 +16,7 @@ let interval=null;
 let dropSpeed = 1000;
 let linesTotal =0;
 let buttonsActive = false;
+const gameover = "GAME OVER";
 
 
 const T = [ 
@@ -110,12 +111,16 @@ class App extends Component {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
-      totalScore : 0
+      totalScore : 0,
+      gameInfo: 'Hello'
     }
+    
     
   }
 
   start = () => {
+    this.setState({gameInfo:'New Game'})
+    this.gameReset();
     buttonsActive = true;
     this.resetRound();//temporary
     this.getRandomTetromino();
@@ -127,12 +132,14 @@ class App extends Component {
    let x = document.getElementById('pauseButton').value;
     if(document.getElementById('pauseButton').value==='resume'){
       document.getElementById('pauseButton').value='pause'
+      this.setState({gameInfo:"Pause"})
       buttonsActive = false;
       this.dropStop();
     }
     else if (document.getElementById('pauseButton').value==='pause'){
       document.getElementById('pauseButton').value='resume'
    this.dropInterval();
+   this.setState({gameInfo:"Resumed"})
     buttonsActive = true};
     document.getElementById('pauseButton').textContent=x; //change button text
     
@@ -166,7 +173,6 @@ clearInterval(interval);
   moveRight = () => {
     xOffset++;
     if (this.collision()) {
-     // console.log("kolizja");
       xOffset--;
     }
     else
@@ -215,7 +221,6 @@ gameBoard.forEach((row,index)=>{
   }})
 if (linesTotal!==0&&linesTotal%5===0){level++;
    dropSpeed=dropSpeed-50;this.dropStop();this.dropInterval(); };//if level up, drop speed increases
-
 score = this.calculateScore(multipleLines);
 linesTotal+=multipleLines;
 totalScore = totalScore +=score;
@@ -250,7 +255,7 @@ if(! gameBoard[0].every(this.isZero)) {//if first row doesn't contain zero, game
    buttonsActive = false;
 //display game over
   //this.draw();
-  
+  this.setState({gameInfo:'gameover'});
  
 }
 };
@@ -267,7 +272,7 @@ yOffset=0;
 }
 
   collision = () => {
-    this.gameOver(); //move it somewhere else
+    this.gameOver(); 
     let piece = randomPiece;
     let board = gameBoard;
     for (let y = 0; y < piece.length; y++) {
@@ -339,24 +344,33 @@ getRandomTetromino = () =>{
   /////////////
   render() {
     return (
-      <Layout>
+      <Layout >
+        
+      <div className = 'game'>
+
+        <div className = 'left-column'>
+         
+        </div>
+
+        <div className = 'center-column'>
+        <div className="game-area">
+          <Board board={this.state.board} />
+        </div> 
+        </div>
+
+        <div className='right-column'>
         <div className = "controls">
        <Controls start = {this.start}
        
         dropStop = {this.dropStop}
+        gameover = {this.state.gameInfo}
         totalScore = {this.state.totalScore}
         level = {level}
         linesTotal = {linesTotal}
-        pause = {this.pause}
-        
-         />
-       
+        pause = {this.pause}/>
         </div>
-        <div className="game-area">
-          <Board board={this.state.board} />
-
-        </div> 
-
+        </div>
+        </div>
       </Layout>
     )
   }

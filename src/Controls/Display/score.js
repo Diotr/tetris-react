@@ -2,10 +2,13 @@ import React from 'react';
 
 const score = (props) =>(
     <div>
-    <label>score</label>
-    <h1>score = {props.totalScore}</h1>
-    <p>level = {props.level}</p>
-    <p>lines = {props.linesTotal}</p>
+        <h1>{props.gameover}</h1>
+    <label className='scoreLabel'>score</label>
+    <h1>{props.totalScore}</h1>
+    <h3>level</h3>
+    <p>{props.level}</p>
+    <h3>lines</h3>
+    <p>{props.linesTotal}</p>
     </div>
 );
 
