@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import Layout from './Layout/Layout';
 import Board from './Board';
 import Controls from './Controls/Controls';
-import Buttons from './Controls/Buttons/Buttons';
-import buttons from './Controls/Buttons/Buttons';
+
 
 let level =1;
 let yOffset = 0;
@@ -16,7 +15,7 @@ let interval=null;
 let dropSpeed = 1000;
 let linesTotal =0;
 let buttonsActive = false;
-const gameover = "GAME OVER";
+
 
 
 const T = [ 
@@ -266,7 +265,7 @@ return field ===0;
 gameReset = () =>{
 yOffset=0;
   xOffset=4;
-  score = 0;
+  this.setState({totalScore:0});
   this.dropStop();
   gameBoard.map((row,_)=>row.fill(0)) //fill gameboard with zeros
 }

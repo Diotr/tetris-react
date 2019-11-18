@@ -2,18 +2,20 @@
 
 button{
         position: relative;   
-        margin: auto;
+        margin: 20px;
         padding: 20px;
-        
-        width:100%;
-
         border: 1px solid rgb(14, 4, 59);
+        width:100%;
+        font-family: xmasxpress3d;
+        font-size: 25px;
+       
         background: rgba(0,51,0,0.2);
-        color:rgb(102, 34, 34);
+        color:rgb(41, 6, 6);
+        font-weight: bold;
         
         }
         button:hover{
-            background-color:rgba(0,51,0,0.5);
+            background-color:rgba(141, 35, 35, 0.5);
         }
 
  .score{
@@ -21,30 +23,42 @@ button{
      text-align: center;
      position: relative;
     
-     border: 1px solid rgb(14, 4, 59);
+    margin-bottom: 50px;
      font-family:xmasxpress3d ;
 
  }
  
 
  h1{
-    font-size: 30px;
-    margin:0;
+    font-size: 45px;
+    margin:20px;
+    font-weight: bold;
+    color: cornsilk;
     
 }
 
+
+h2{
+    font-size: 45px;
+    margin:20px;
+    font-weight: bold;
+   
+    
+}
 .scoreLabel{
    
-    font-size: 10mm;
+    font-size: 40px;
+    font-weight: bold;
     margin:0;
 }
 h3{
    
-   font-size: 10mm;
-   margin:0;
+   font-size: 8mm;
+   margin:5px;
 }
 p{
    
-   font-size: 10mm;
-   margin:0;
+   font-size: 30px;
+   margin:5px;
+   font-weight: bold;
 }
