@@ -1,41 +1,32 @@
-
-
 .game{
   position: absolute;
   height: 100%;
   width: 100%;
-    background-image: url(./images/lightscape-LtnPejWDSAY-unsplash.jpg);
-    background-size:cover;
-    background-repeat: no-repeat;
+  background-image: url(./images/lightscape-LtnPejWDSAY-unsplash.jpg);
+  background-size:cover;
+  background-repeat: no-repeat;
   display: flex;
-  
-  }
-.left-column{
-  
+}
+
+.left-column{  
   flex:1;
 } 
+
 .center-column{
-
   flex:1;
-  
+}
 
-} 
 .right-column{
- 
   flex:1;
 }
 
 .game-area{
   position: relative;
   top:10%;
- margin: auto;
+  margin: auto;
   width: 300px;
   height: 600px;
   border: 8px solid rgb(14, 4, 59);
-
- 
- 
- 
 }
 
 .controls{
@@ -44,18 +35,9 @@
   margin: auto;
   width: 250px;
   height: auto;
-  border-radius: 5px;
-  
- 
+  border-radius: 5px; 
 }
 
-/* .game-board{
-  position: relative;
-  margin:  auto;
-  width: 600px;
-  height: 800px;
-  border: 2px solid #000;
-} */
 .block{
   position: absolute;
   margin: auto;
@@ -63,17 +45,16 @@
   height: 5%;
   border: 0.4px solid #000;
   background-color: blue;
-  
 }
-body{
 
+body{
  font-family: 'Courier New', Courier, monospace;
- 
 }
 
 html{
   height: auto;
 }
+
 @font-face{
   font-family:'xmasxpress3d' ;
   src: local("xmasxpress3d"),url(./fonts/xmasxpress3d.ttf) format('truetype');

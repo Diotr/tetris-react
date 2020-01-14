@@ -8,56 +8,47 @@ button{
         width:100%;
         font-family: xmasxpress3d;
         font-size: 25px;
-       
         background: rgba(0,51,0,0.2);
-        color:rgb(41, 6, 6);
+        color:rgb(30, 233, 91);
         font-weight: bold;
-        
-        }
-        button:hover{
-            background-color:rgba(141, 35, 35, 0.5);
         }
 
- .score{
-     
+button:hover{
+             background-color:rgba(141, 35, 35, 0.5);
+}
+
+.score{
      text-align: center;
      position: relative;
-    
-    margin-bottom: 50px;
+     margin-bottom: 50px;
      font-family:xmasxpress3d ;
-
- }
- 
+}
 
  h1{
     font-size: 45px;
     margin:20px;
     font-weight: bold;
     color: cornsilk;
-    
 }
-
 
 h2{
     font-size: 45px;
     margin:20px;
-    font-weight: bold;
-   
-    
+    font-weight: bold; 
 }
+
 .scoreLabel{
-   
     font-size: 40px;
     font-weight: bold;
     margin:0;
 }
+
 h3{
-   
    font-size: 8mm;
    margin:5px;
 }
+
 p{
-   
    font-size: 30px;
    margin:5px;
    font-weight: bold;
