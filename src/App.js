@@ -8,7 +8,6 @@ import Instructions from "./Instructions/Instructions";
 let level = 1;
 let yOffset = 0;
 let xOffset = 5;
-let score = 0;
 let totalScore = 0;
 let randomPiece = [];
 let interval = null;
