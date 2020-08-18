@@ -321,7 +321,7 @@ class App extends Component {
   };
 
   draw = () => {
-    let newBoard = JSON.parse(JSON.stringify(gameBoard)); // make copy of gameboard
+    let newBoard = JSON.parse(JSON.stringify(gameBoard)); // make a hard copy of the gameboard
     randomPiece.forEach((row, y) =>
       row.forEach((blockColor, x) => {
         if (blockColor !== 0) {
